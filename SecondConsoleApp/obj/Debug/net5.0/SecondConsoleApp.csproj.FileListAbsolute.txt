@@ -1,0 +1,16 @@
+C:\_Temp\Mitko\PGEE\SecondConsoleApp\bin\Debug\net5.0\SecondConsoleApp.exe
+C:\_Temp\Mitko\PGEE\SecondConsoleApp\bin\Debug\net5.0\SecondConsoleApp.deps.json
+C:\_Temp\Mitko\PGEE\SecondConsoleApp\bin\Debug\net5.0\SecondConsoleApp.runtimeconfig.json
+C:\_Temp\Mitko\PGEE\SecondConsoleApp\bin\Debug\net5.0\SecondConsoleApp.runtimeconfig.dev.json
+C:\_Temp\Mitko\PGEE\SecondConsoleApp\bin\Debug\net5.0\SecondConsoleApp.dll
+C:\_Temp\Mitko\PGEE\SecondConsoleApp\bin\Debug\net5.0\ref\SecondConsoleApp.dll
+C:\_Temp\Mitko\PGEE\SecondConsoleApp\bin\Debug\net5.0\SecondConsoleApp.pdb
+C:\_Temp\Mitko\PGEE\SecondConsoleApp\obj\Debug\net5.0\SecondConsoleApp.csprojAssemblyReference.cache
+C:\_Temp\Mitko\PGEE\SecondConsoleApp\obj\Debug\net5.0\SecondConsoleApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\_Temp\Mitko\PGEE\SecondConsoleApp\obj\Debug\net5.0\SecondConsoleApp.AssemblyInfoInputs.cache
+C:\_Temp\Mitko\PGEE\SecondConsoleApp\obj\Debug\net5.0\SecondConsoleApp.AssemblyInfo.cs
+C:\_Temp\Mitko\PGEE\SecondConsoleApp\obj\Debug\net5.0\SecondConsoleApp.csproj.CoreCompileInputs.cache
+C:\_Temp\Mitko\PGEE\SecondConsoleApp\obj\Debug\net5.0\SecondConsoleApp.dll
+C:\_Temp\Mitko\PGEE\SecondConsoleApp\obj\Debug\net5.0\ref\SecondConsoleApp.dll
+C:\_Temp\Mitko\PGEE\SecondConsoleApp\obj\Debug\net5.0\SecondConsoleApp.pdb
+C:\_Temp\Mitko\PGEE\SecondConsoleApp\obj\Debug\net5.0\SecondConsoleApp.genruntimeconfig.cache

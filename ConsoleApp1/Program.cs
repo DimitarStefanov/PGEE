@@ -7,11 +7,14 @@ namespace TicTacToe
 {
     class Program
     {
-        const int BOARD_ROWS = 3;
-        const int BOARD_COLUMNS = 3;
+        const int BOARD_ROWS = 5;
+        const int BOARD_COLUMNS = 8;
         const int MAX_NUMBER_OF_MOVES = BOARD_ROWS * BOARD_COLUMNS;
         const char PLAYER1MARK = 'X';
         const char PLAYER2MARK = 'O';
+        const char EMPTY_FIELD_MARK = '-';
+        const ConsoleColor PLAYER1COLOR = ConsoleColor.Blue;
+        const ConsoleColor PLAYER2COLOR = ConsoleColor.Green;
 
         static void Main(string[] args)
         {
@@ -42,7 +45,7 @@ namespace TicTacToe
             {
                 for (int j = 0; j < BOARD_COLUMNS; j++)
                 {
-                    result[i, j] = '-';
+                    result[i, j] = EMPTY_FIELD_MARK;
                 }
             }
 
@@ -60,7 +63,7 @@ namespace TicTacToe
             {
                 do
                 {
-                    Console.WriteLine($"Please enter a valid X coordinate [0-{BOARD_ROWS-1}]");
+                    WriteLineTextInColor($"Please enter a valid X coordinate [0-{BOARD_ROWS-1}]", ConsoleColor.Yellow);
                     xCoord = int.Parse(Console.ReadLine());
 
                 }
@@ -68,13 +71,13 @@ namespace TicTacToe
 
                 do
                 {
-                    Console.WriteLine($"Please enter a valid Y coordinate [0-{BOARD_COLUMNS-1}]");
+                    WriteLineTextInColor($"Please enter a valid Y coordinate [0-{BOARD_COLUMNS-1}]", ConsoleColor.Red);
                     yCoord = int.Parse(Console.ReadLine());
 
                 }
                 while (yCoord > BOARD_COLUMNS - 1 || yCoord < 0);
 
-                if(board[xCoord, yCoord] != '-')
+                if(board[xCoord, yCoord] != EMPTY_FIELD_MARK)
                 {
                     isPositionTaken = true;
                     Console.WriteLine("These coordinates are already taken");
@@ -96,12 +99,24 @@ namespace TicTacToe
         {
             Console.Clear();
 
+            WriteTextInColor(" ", ConsoleColor.Red, ConsoleColor.DarkGray);
+
+            for (int i = 0; i < BOARD_COLUMNS; i++)
+            {
+                WriteTextInColor(i.ToString(), ConsoleColor.Red, ConsoleColor.DarkGray);
+            }
+
+            WriteLineTextInColor("", ConsoleColor.Red, ConsoleColor.DarkGray);
+
             for (int i = 0; i < BOARD_ROWS; i++)
             {
+                WriteTextInColor(i.ToString(), ConsoleColor.Yellow, ConsoleColor.DarkGray);
+
                 for (int j = 0; j < BOARD_COLUMNS; j++)
                 {
-                    Console.Write(board[i, j]);
+                    WriteTextInColor(board[i, j].ToString(), PrintBoardElement(board, i, j));
                 }
+
                 Console.WriteLine();
             }
             Console.WriteLine($"Player {currentPlayerMark} turn");
@@ -129,9 +144,9 @@ namespace TicTacToe
                 playerMarkCounter = 0;
             }
 
-            for (int i = 0; i < BOARD_COLUMNS; i++)
+            for (int i = 0; i < BOARD_ROWS; i++)
             {
-                for (int j = 0; j < BOARD_ROWS; j++)
+                for (int j = 0; j < BOARD_COLUMNS; j++)
                 {
                     if (board[i, j] == playerMark)
                     {
@@ -176,6 +191,50 @@ namespace TicTacToe
             }
 
             return false;
+        }
+
+        static void WriteLineTextInColor(string text, ConsoleColor foregroundColor, ConsoleColor backgroundColor = ConsoleColor.Black)
+        {
+            Console.ForegroundColor = foregroundColor;
+            Console.BackgroundColor = backgroundColor;
+            Console.WriteLine(text);
+            Console.ResetColor();
+        }
+
+        static void WriteTextInColor(string text, ConsoleColor foregroundColor, ConsoleColor backgroundColor = ConsoleColor.Black)
+        {
+            Console.ForegroundColor = foregroundColor;
+            Console.BackgroundColor = backgroundColor;
+            Console.Write(text);
+            Console.ResetColor();
+        }
+
+        /// <summary>
+        /// This method prints a single element from the game board array,
+        /// deciding which color to use based on the player.
+        /// </summary>
+        /// <param name="board">The game board array.</param>
+        /// <param name="i">The X element in the array.</param>
+        /// <param name="j">The Y element in the array.</param>
+        /// <returns></returns>
+        private static ConsoleColor PrintBoardElement(char[,] board, int i, int j)
+        {
+            ConsoleColor elementColor = ConsoleColor.Gray;
+
+            switch (board[i, j])
+            {
+                case PLAYER1MARK:
+                    elementColor = PLAYER1COLOR;
+                    break;
+                case PLAYER2MARK:
+                    elementColor = PLAYER2COLOR;
+                    break;
+                default:
+                    elementColor = ConsoleColor.Gray;
+                    break;
+            }
+
+            return elementColor;
         }
     }
 }

@@ -1,0 +1,16 @@
+C:\_Temp\Mitko\PGEE\TgirdConsoleApp\bin\Debug\net5.0\TgirdConsoleApp.exe
+C:\_Temp\Mitko\PGEE\TgirdConsoleApp\bin\Debug\net5.0\TgirdConsoleApp.deps.json
+C:\_Temp\Mitko\PGEE\TgirdConsoleApp\bin\Debug\net5.0\TgirdConsoleApp.runtimeconfig.json
+C:\_Temp\Mitko\PGEE\TgirdConsoleApp\bin\Debug\net5.0\TgirdConsoleApp.runtimeconfig.dev.json
+C:\_Temp\Mitko\PGEE\TgirdConsoleApp\bin\Debug\net5.0\TgirdConsoleApp.dll
+C:\_Temp\Mitko\PGEE\TgirdConsoleApp\bin\Debug\net5.0\ref\TgirdConsoleApp.dll
+C:\_Temp\Mitko\PGEE\TgirdConsoleApp\bin\Debug\net5.0\TgirdConsoleApp.pdb
+C:\_Temp\Mitko\PGEE\TgirdConsoleApp\obj\Debug\net5.0\TgirdConsoleApp.csprojAssemblyReference.cache
+C:\_Temp\Mitko\PGEE\TgirdConsoleApp\obj\Debug\net5.0\TgirdConsoleApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\_Temp\Mitko\PGEE\TgirdConsoleApp\obj\Debug\net5.0\TgirdConsoleApp.AssemblyInfoInputs.cache
+C:\_Temp\Mitko\PGEE\TgirdConsoleApp\obj\Debug\net5.0\TgirdConsoleApp.AssemblyInfo.cs
+C:\_Temp\Mitko\PGEE\TgirdConsoleApp\obj\Debug\net5.0\TgirdConsoleApp.csproj.CoreCompileInputs.cache
+C:\_Temp\Mitko\PGEE\TgirdConsoleApp\obj\Debug\net5.0\TgirdConsoleApp.dll
+C:\_Temp\Mitko\PGEE\TgirdConsoleApp\obj\Debug\net5.0\ref\TgirdConsoleApp.dll
+C:\_Temp\Mitko\PGEE\TgirdConsoleApp\obj\Debug\net5.0\TgirdConsoleApp.pdb
+C:\_Temp\Mitko\PGEE\TgirdConsoleApp\obj\Debug\net5.0\TgirdConsoleApp.genruntimeconfig.cache
