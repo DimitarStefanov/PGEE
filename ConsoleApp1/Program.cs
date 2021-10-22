@@ -1,112 +1,76 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
-
-namespace TicTacToe
+namespace SeaChess
 {
     class Program
     {
-        const int BOARD_ROWS = 3;
-        const int BOARD_COLUMNS = 3;
+        const int BOARD_ROWS = 5;
+        const int BOARD_COLUMNS = 5;
         const int MAX_NUMBER_OF_MOVES = BOARD_ROWS * BOARD_COLUMNS;
         const char PLAYER1MARK = 'X';
         const char PLAYER2MARK = 'O';
-
         static void Main(string[] args)
         {
-            char[,] board = InitBoard();            
-            bool isFirstPlayerMove = true;
+            char[,] gameBoard = InitBoard();
+            int xCoord = 0;
+            int yCoord = 0;
+            int playerCounter = 0; 
+            int currentPlayer = 1;
+            char currentPlayerMark = 'X';
 
             for (int i = 0; i < MAX_NUMBER_OF_MOVES; i++)
-            {
-                char currentPlayerMark = isFirstPlayerMove ? PLAYER1MARK : PLAYER2MARK;
-                PrintBoard(board, currentPlayerMark);
+            {                    
+                    currentPlayer = playerCounter % 2 == 0 ? 1 : 2; 
 
-                board = AddNextMoveToBoard(board, currentPlayerMark);
-                
-                if (CheckForWinningMove(board, currentPlayerMark))
-                {
-                    Console.WriteLine($"Player {currentPlayerMark} wins");
-                    break;
-                }
+                    PrintBoard(gameBoard);
 
-                isFirstPlayerMove = !isFirstPlayerMove;
+                    if(CheckForWinningMove(gameBoard,currentPlayerMark) || CheckDiagonals(gameBoard, currentPlayerMark))
+                    {
+                        PrintBoard(gameBoard);
+                        Console.WriteLine($"Player {currentPlayerMark} wins");
+                        break;
+                    }
+                    if(currentPlayer == 1)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+
+                        currentPlayerMark = 'X';
+
+                        Console.WriteLine("Player 1's turn. -> Place an X");
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+
+                        currentPlayerMark = 'O';
+
+                        Console.WriteLine("Player 2's turn -> Place a O");
+                    }
+            
+                   Console.WriteLine($"Enter x coordinate [0-{BOARD_ROWS-1}]: ");
+                   xCoord = PromptUserForX(int.Parse(Console.ReadLine()), gameBoard, currentPlayerMark);
+                                   
+                   Console.WriteLine($"Enter y coordinate [0-{BOARD_COLUMNS-1}]: ");
+                   yCoord = PromptUserForY(int.Parse(Console.ReadLine()), gameBoard, currentPlayerMark);
+
+                   List<dynamic> isTakenList = CheckIfGameFieldTaken(xCoord, yCoord, gameBoard,currentPlayerMark);
+
+                   if(isTakenList[0] == false)
+                   {
+                        if(currentPlayer == 1)
+                        {
+                            gameBoard[isTakenList[1],isTakenList[2]] = 'X';
+                        }
+                        else
+                        {
+                            gameBoard[isTakenList[1],isTakenList[2]] = 'O';
+                        }
+                   }
+                   playerCounter++;
             }
         }
-
-        static char[,] InitBoard()
-        {
-            char[,] result = new char[BOARD_ROWS, BOARD_COLUMNS];
-            for(int i = 0; i < BOARD_ROWS; i++)
-            {
-                for (int j = 0; j < BOARD_COLUMNS; j++)
-                {
-                    result[i, j] = '-';
-                }
-            }
-
-            return result;
-        }
-
-        static char[,] AddNextMoveToBoard(char[,] board, char playerMark)
-        {
-            int xCoord;
-            int yCoord;
-
-            bool isPositionTaken = true;
-
-            do
-            {
-                do
-                {
-                    Console.WriteLine($"Please enter a valid X coordinate [0-{BOARD_ROWS-1}]");
-                    xCoord = int.Parse(Console.ReadLine());
-
-                }
-                while (xCoord > BOARD_ROWS - 1 || xCoord < 0);
-
-                do
-                {
-                    Console.WriteLine($"Please enter a valid Y coordinate [0-{BOARD_COLUMNS-1}]");
-                    yCoord = int.Parse(Console.ReadLine());
-
-                }
-                while (yCoord > BOARD_COLUMNS - 1 || yCoord < 0);
-
-                if(board[xCoord, yCoord] != '-')
-                {
-                    isPositionTaken = true;
-                    Console.WriteLine("These coordinates are already taken");
-                }
-                else
-                {
-                    isPositionTaken = false;
-                }
-            }
-            while (isPositionTaken);
-
-
-            board[xCoord, yCoord] = playerMark;
-
-            return board;
-        }
-
-        private static void PrintBoard(char[,] board, char currentPlayerMark)
-        {
-            Console.Clear();
-
-            for (int i = 0; i < BOARD_ROWS; i++)
-            {
-                for (int j = 0; j < BOARD_COLUMNS; j++)
-                {
-                    Console.Write(board[i, j]);
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine($"Player {currentPlayerMark} turn");
-        }
-
         static bool CheckForWinningMove(char[,] board, char playerMark)
         {
             int playerMarkCounter = 0;
@@ -133,9 +97,17 @@ namespace TicTacToe
             {
                 for (int j = 0; j < BOARD_ROWS; j++)
                 {
-                    if (board[i, j] == playerMark)
+                    try{
+                        if (board[i, j] == playerMark)
+                        {
+                            playerMarkCounter++;
+                        }
+
+                    }
+                    catch(Exception)
                     {
-                        playerMarkCounter++;
+                        Console.WriteLine("Your gameBoard is not a matrix. Press any key to exit.");
+                        Console.ReadLine();
                     }
                 }
 
@@ -151,31 +123,151 @@ namespace TicTacToe
             {
                 for (int i = 0; i < BOARD_ROWS; i++)
                 {
-                    if(board[i, i] == playerMark)
+                    if(board[i, i] == playerMark) // checking horizontally
                     {
                         playerMarkCounter++;
                     }
 
-                    if (playerMarkCounter == BOARD_COLUMNS)
+                    if (playerMarkCounter == BOARD_COLUMNS) 
                     {
                         return true;
                     }
-
                     playerMarkCounter = 0;
+                }
 
-                    if (board[(BOARD_ROWS -1) - i, i] == playerMark)
+            }
+            return false;
+        }
+        
+        static bool CheckDiagonals(char[,] board, char playerMark)
+        {
+            int playerCounterFirstDiagonal = 0;
+            int playerCounterSecondDiagonal = 0;
+            for (int col = 0; col < BOARD_COLUMNS; col++)
+            {
+                for (int row = 0; row < BOARD_ROWS; row++)
+                {
+                    if(col==row)
                     {
-                        playerMarkCounter++;
-                    }
-
-                    if (playerMarkCounter == BOARD_COLUMNS)
-                    {
-                        return true;
+                        if(board[row,col] == playerMark)
+                        {
+                            playerCounterFirstDiagonal++;
+                        }
+                        if(board[row,BOARD_COLUMNS-(row+1)] == playerMark)
+                        {
+                            playerCounterSecondDiagonal++;
+                        }
                     }
                 }
             }
-
+            if(playerCounterFirstDiagonal==BOARD_COLUMNS || playerCounterSecondDiagonal==BOARD_COLUMNS)
+            {
+                return true;
+            }
             return false;
         }
+        static List<dynamic> CheckIfGameFieldTaken(int xCoordinate, int yCoordinate, char[,] gameBoardState, char currentPlayerMark)
+        {            
+            bool isTaken = false;
+
+            List<dynamic> coordinatesList = new List<dynamic>();
+
+            if(gameBoardState[xCoordinate,yCoordinate] != '-')
+            {
+                isTaken = true;
+                Console.WriteLine("That field is already taken !");
+                        
+                Console.WriteLine("Please enter a new x coordinate: ");
+                xCoordinate = PromptUserForX(int.Parse(Console.ReadLine()), gameBoardState,currentPlayerMark);
+
+                Console.WriteLine("Please enter a new y coordinate: ");
+                yCoordinate = PromptUserForY(int.Parse(Console.ReadLine()), gameBoardState, currentPlayerMark);
+
+                return CheckIfGameFieldTaken(xCoordinate, yCoordinate, gameBoardState, currentPlayerMark);
+            }
+            coordinatesList.Add(isTaken);
+            coordinatesList.Add(xCoordinate);
+            coordinatesList.Add(yCoordinate);
+
+            return coordinatesList;
+        }
+        static int PromptUserForX(int xCoordinate, char[,] gameBoard, char currentPlayerMark)
+        {
+            if(xCoordinate > BOARD_ROWS || xCoordinate < 0)
+            {
+                Console.WriteLine($"Please enter a valid x coordinate [0-{BOARD_ROWS-1}]: ");
+
+                xCoordinate = int.Parse(Console.ReadLine());
+
+                return PromptUserForX(xCoordinate,gameBoard,currentPlayerMark);
+            }
+
+            return xCoordinate;
+        }
+
+         static int PromptUserForY(int yCoordinate, char[,] gameBoard, char currentPlayerMark)
+        {
+            if(CheckForWinningMove(gameBoard,currentPlayerMark))
+            {
+                Console.WriteLine("WIN");
+                PrintBoard(gameBoard);
+                Environment.Exit(0);
+            }
+            if(yCoordinate > BOARD_COLUMNS || yCoordinate < 0)
+            {
+                Console.WriteLine($"Please enter a valid y coordinate [0-{BOARD_COLUMNS-1}]: ");
+
+                yCoordinate = int.Parse(Console.ReadLine());
+
+                return PromptUserForY(yCoordinate, gameBoard, currentPlayerMark);
+            }
+
+            return yCoordinate;
+        }
+
+        static char[,] InitBoard()
+        {
+            char[,] result = new char[BOARD_ROWS, BOARD_COLUMNS];
+            for(int i = 0; i < BOARD_ROWS; i++)
+            {
+                for (int j = 0; j < BOARD_COLUMNS; j++)
+                {
+                    result[i, j] = '-';
+                }
+            }
+
+            return result;
+        }
+        static void PrintBoard(char[,] gameBoard)
+        {
+            Console.Clear();
+            string topNumbers = "";
+            for (int rowIndicator = 0; rowIndicator < BOARD_ROWS; rowIndicator++)
+            {
+                topNumbers += rowIndicator.ToString()+" ";
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.BackgroundColor = ConsoleColor.DarkGray;
+            }
+            Console.WriteLine(" " + topNumbers);
+            Console.ResetColor();
+            for (int row = 0; row < BOARD_ROWS; row++)
+            {
+                ColorCharacter(row.ToString());
+                for (int col = 0; col < BOARD_COLUMNS; col++)
+                {
+                    Console.Write(string.Format($"{gameBoard[row, col]} "));
+                }
+                Console.Write("\n"+"\n");
+            }
+        }
+        static void ColorCharacter(string character)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.Write(character+"");
+            Console.ResetColor();
+
+        }
     }
+    
 }

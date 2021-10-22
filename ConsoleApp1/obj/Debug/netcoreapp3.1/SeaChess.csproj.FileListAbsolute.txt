@@ -1,0 +1,13 @@
+/media/martin/HDD/mentormate/SeaChess/bin/Debug/netcoreapp3.1/SeaChess
+/media/martin/HDD/mentormate/SeaChess/bin/Debug/netcoreapp3.1/SeaChess.deps.json
+/media/martin/HDD/mentormate/SeaChess/bin/Debug/netcoreapp3.1/SeaChess.runtimeconfig.json
+/media/martin/HDD/mentormate/SeaChess/bin/Debug/netcoreapp3.1/SeaChess.runtimeconfig.dev.json
+/media/martin/HDD/mentormate/SeaChess/bin/Debug/netcoreapp3.1/SeaChess.dll
+/media/martin/HDD/mentormate/SeaChess/bin/Debug/netcoreapp3.1/SeaChess.pdb
+/media/martin/HDD/mentormate/SeaChess/obj/Debug/netcoreapp3.1/SeaChess.csprojAssemblyReference.cache
+/media/martin/HDD/mentormate/SeaChess/obj/Debug/netcoreapp3.1/SeaChess.AssemblyInfoInputs.cache
+/media/martin/HDD/mentormate/SeaChess/obj/Debug/netcoreapp3.1/SeaChess.AssemblyInfo.cs
+/media/martin/HDD/mentormate/SeaChess/obj/Debug/netcoreapp3.1/SeaChess.csproj.CoreCompileInputs.cache
+/media/martin/HDD/mentormate/SeaChess/obj/Debug/netcoreapp3.1/SeaChess.dll
+/media/martin/HDD/mentormate/SeaChess/obj/Debug/netcoreapp3.1/SeaChess.pdb
+/media/martin/HDD/mentormate/SeaChess/obj/Debug/netcoreapp3.1/SeaChess.genruntimeconfig.cache
