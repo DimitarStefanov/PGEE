@@ -19,63 +19,87 @@ class Program
                 Question = "What type of drinks you want?",
                 ParentAnswer = "drinks"
             };
-            GraphNode pizzaChoice = new GraphNode()
+            GraphNode typeOfDrinksChoice = new GraphNode()
             {
                 Id = 4,
+                Question = "You are all set",
+                ParentAnswer = "fanta"
+            };
+            GraphNode typeOfDrinkChoice = new GraphNode()
+            {
+                Id = 5,
+                Question = "You are all set?",
+                ParentAnswer = "water"
+            };
+            GraphNode pizzaChoice = new GraphNode()
+            {
+                Id = 6,
                 Question = "What type of pizza you want?",
                 ParentAnswer = "pizza"
             };
             GraphNode pastaChoice = new GraphNode()
             {
-                Id = 5,
+                Id = 7,
                 Question = "What type of pasta want?",
                 ParentAnswer = "pasta"
             };
             GraphNode traditionalFoodChoice = new GraphNode()
             {
-                Id = 6,
+                Id = 8,
                 Question = "What type of traditional food you want?",
                 ParentAnswer = "traditional food"
             };
             GraphNode typeOfPizzaChoice = new GraphNode()
             {
-                Id = 7,
+                Id = 9,
                 Question = "Do you want a drink?",
                 ParentAnswer = "margherita"
             };
-            GraphNode anotherdrinkChoice = new GraphNode()
+            GraphNode anotherDrinkAfterTheFoodChoice = new GraphNode()
             {
-                Id = 8,
+                Id = 10,
                 Question = "You are all set",
-                ParentAnswer = "No",
+                ParentAnswer = "no",
             };
-            GraphNode drinkChoice = new GraphNode()
+            GraphNode drinkAfterTheFoodChoice = new GraphNode()
             {
-                Id = 9,
-                Question = "You are all set?",
-                ParentAnswer = "Yes",
+                Id = 11,
+                Question = "What type of drinks you want?",
+                ParentAnswer = "yes",
+            };
+            GraphNode secondDrinkChoice = new GraphNode()
+            {
+                Id = 17,
+                Question = "You are all set",
+                ParentAnswer = "water",
+            };
+            GraphNode anotherDrinkChoice = new GraphNode()
+            {
+                Id = 16,
+                Question = "You are all set",
+                ParentAnswer = "fanta",
             };
             GraphNode anotherTypeOfPizzaChoice = new GraphNode()
             {
-                Id = 10,
+                Id = 12,
                 Question = "You are all set",
                 ParentAnswer = "pepperoni"
             };
             GraphNode typeOfPastaChoice = new GraphNode()
             {
-                Id = 11,
+                Id = 13,
                 Question = "You are all set",
                 ParentAnswer = "bucatini"
             };
             GraphNode anotherTypeOfPastaChoice = new GraphNode()
             {
-                Id = 12,
+                Id = 14,
                 Question = "You are all set",
                 ParentAnswer = "penne"
             };
             GraphNode typeOfTraditionalFoodChoice = new GraphNode()
             {
-                Id = 13,
+                Id = 15,
                 Question = "You are all set",
                 ParentAnswer = "beans"
             };
@@ -84,12 +108,20 @@ class Program
             foodChoice.Childs.Add(pastaChoice);
             foodChoice.Childs.Add(traditionalFoodChoice);
 
+            drinksChoice.Childs.Add(typeOfDrinksChoice);
+            drinksChoice.Childs.Add(typeOfDrinkChoice);
+
             parentChoise.Childs.Add(foodChoice);
             parentChoise.Childs.Add(drinksChoice);
 
             pizzaChoice.Childs.Add(typeOfPizzaChoice);
-            typeOfPizzaChoice.Childs.Add(drinkChoice);
-            typeOfPizzaChoice.Childs.Add(anotherdrinkChoice);
+
+            typeOfPizzaChoice.Childs.Add(drinkAfterTheFoodChoice);
+
+            typeOfPizzaChoice.Childs.Add(anotherDrinkAfterTheFoodChoice);
+
+            drinkAfterTheFoodChoice.Childs.Add(secondDrinkChoice);
+            drinkAfterTheFoodChoice.Childs.Add(anotherDrinkChoice);
             pizzaChoice.Childs.Add(anotherTypeOfPizzaChoice);
 
             pastaChoice.Childs.Add(typeOfPastaChoice);
@@ -108,6 +140,7 @@ class Program
             {
                 Console.WriteLine(child.ParentAnswer);
             }
+            Console.Write("\nYour answer: ");
             string answer = Console.ReadLine().ToLower();
             GraphNode nextNode = currentNode.SelectNextChild(answer);
             if (nextNode != null)
@@ -118,6 +151,7 @@ class Program
             {
                 ShowChoice(currentNode);
             }
+
         }
     }
     class GraphNode
@@ -140,3 +174,7 @@ class Program
             return result;
         }
     }
+
+
+
+
