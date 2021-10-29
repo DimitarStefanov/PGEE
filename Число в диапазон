@@ -8,38 +8,61 @@ namespace GraphNode
     {
         static void Main(string[] args)
         {
-            ReadNumber(5, 101);
-        }
+            Console.Write("Въведете диапазон; Първо число: ");
+            int start = int.Parse(Console.ReadLine());
+            Console.Write("Въведете диапазон; Второ число: ");
+            int end = int.Parse(Console.ReadLine());
+            ReadNumber(start, end);
+        }   
         public static void ReadNumber(int start, int end)
         {
-            int[] arr = new int[10];
-            Random rnd = new Random();
+            int[] arr = new int[5];
+            //Random rnd = new Random();
 
             int j = 0;
+
+            Console.WriteLine("Въведете {0} числа", arr.Length);
+
             for(int i = 0; i < arr.Length; i++)
             {
-                arr[i] = rnd.Next(1, 133);
-                Console.Write(arr[i] + ";");
+                //arr[i] = rnd.Next(1, 133);
+                //Console.Write(arr[i] + ";");
+                arr[i] = int.Parse(Console.ReadLine());
             }
 
             Console.WriteLine("\n");
 
+            List<int> outOfRange = new List<int>();
+
+            Array.Sort(arr);
             for (j = 0; j < arr.Length; j++)
             {
-                Array.Sort(arr);
                 Console.Write(arr[j] + ";");
-            }
 
+                if (arr[j] > end ||
+                    arr[j] < start)
+                {
+                    outOfRange.Add(arr[j]);
+                }
+
+            } 
+
+            Console.WriteLine("\n");
+
+            foreach (int n in outOfRange)
+            {
+                Console.Write(n + ";");
+            }
             Console.WriteLine("\n");
             try
             {
-                Console.Write("Показване на числа от 5 до 101:",arr[j]);
+                Console.Write("Показване на числа от {0} до {1}: {2}", start, end, arr[j]);
             }
             catch(Exception e)
             {
                 Console.WriteLine("Възникна грешка");
-                Console.WriteLine("Тип на грешката: "+e.GetType().Name);
-                Console.WriteLine("Описание: "+e.Message);
+                Console.WriteLine("Тип на грешката: " + e.GetType().Name);
+                Console.WriteLine("Описание: " + e.Message);
             }
         }
     }
