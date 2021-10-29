@@ -1,0 +1,47 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+
+namespace GraphNode
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ReadNumber(5, 101);
+        }
+        public static void ReadNumber(int start, int end)
+        {
+            int[] arr = new int[10];
+            Random rnd = new Random();
+
+            int j = 0;
+            for(int i = 0; i < arr.Length; i++)
+            {
+                arr[i] = rnd.Next(1, 133);
+                Console.Write(arr[i] + ";");
+            }
+
+            Console.WriteLine("\n");
+
+            for (j = 0; j < arr.Length; j++)
+            {
+                Array.Sort(arr);
+                Console.Write(arr[j] + ";");
+            }
+
+            Console.WriteLine("\n");
+            try
+            {
+                Console.Write("Показване на числа от 5 до 101:",arr[j]);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Възникна грешка");
+                Console.WriteLine("Тип на грешката: "+e.GetType().Name);
+                Console.WriteLine("Описание: "+e.Message);
+            }
+        }
+    }
+
+}
