@@ -67,6 +67,12 @@ class Program
                 Question = "What type of drinks you want?",
                 ParentAnswer = "yes",
             };
+            GraphNode withoutDrinkAfterTheTrFoodChoice = new GraphNode()
+            {
+                Id = 19,
+                Question = "You are all set",
+                ParentAnswer = "no",
+            };
             GraphNode secondDrinkChoice = new GraphNode()
             {
                 Id = 17,
@@ -100,8 +106,26 @@ class Program
             GraphNode typeOfTraditionalFoodChoice = new GraphNode()
             {
                 Id = 15,
-                Question = "You are all set",
+                Question = "Do you want a drink?",
                 ParentAnswer = "beans"
+            };
+            GraphNode drinkAfterTheTrFoodChoice = new GraphNode()
+            {
+                Id = 16,
+                Question = "What type of drinks you want?",
+                ParentAnswer = "yes"
+            };
+            GraphNode anotherDrinksChoice = new GraphNode()
+            {
+                Id = 17,
+                Question = "You are all set",
+                ParentAnswer = "fanta",
+            };
+            GraphNode anotherOptionForDrinkChoice = new GraphNode()
+            {
+                Id = 18,
+                Question = "You are all set",
+                ParentAnswer = "water",
             };
 
             foodChoice.Childs.Add(pizzaChoice);
@@ -128,6 +152,10 @@ class Program
             pastaChoice.Childs.Add(anotherTypeOfPastaChoice);
 
             traditionalFoodChoice.Childs.Add(typeOfTraditionalFoodChoice);
+            typeOfTraditionalFoodChoice.Childs.Add(drinkAfterTheTrFoodChoice);
+            typeOfTraditionalFoodChoice.Childs.Add(withoutDrinkAfterTheTrFoodChoice);
+            drinkAfterTheTrFoodChoice.Childs.Add(anotherDrinksChoice);
+            drinkAfterTheTrFoodChoice.Childs.Add(anotherOptionForDrinkChoice);
 
             ShowChoice(parentChoise);
         }
@@ -136,13 +164,16 @@ class Program
         {
             Console.Clear();
             Console.WriteLine(currentNode.Question);
+
             foreach (GraphNode child in currentNode.Childs)
             {
                 Console.WriteLine(child.ParentAnswer);
             }
+
             Console.Write("\nYour answer: ");
             string answer = Console.ReadLine().ToLower();
             GraphNode nextNode = currentNode.SelectNextChild(answer);
+
             if (nextNode != null)
             {
                 ShowChoice(nextNode);
@@ -163,6 +194,7 @@ class Program
         public GraphNode SelectNextChild(string answer)
         {
             GraphNode result = null;
+
             foreach (GraphNode child in Childs)
             {
                 if (answer == child.ParentAnswer)
@@ -171,10 +203,10 @@ class Program
                     break;
                 }
             }
+
             return result;
         }
     }
-
 
 
 
