@@ -1,0 +1,171 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using Grades.Students;
+using Grades.Marks;
+namespace Classes
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Student informationForAStudent = new Student("Мартин", 11);
+            informationForAStudent.DisplayStudentInformation();
+
+            Mark subject = new Mark("Математика");
+            subject.ShowSubject();
+            subject.ShowMark();
+
+            Mark newSubject = new Mark("Български");
+            newSubject.ShowSubject();
+            newSubject.ShowMark();
+            newSubject.ContinueToTheNextGrade();
+
+        }
+    }
+}
+
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Grades.Marks;
+
+
+namespace Grades.Students
+{
+    class Student
+    {
+
+        #region Variables
+
+         private string _name = string.Empty;
+         private int _grade = 0;
+
+        #endregion
+
+        #region Constructor
+
+         public Student(string name, int grade)
+         {
+            _name = name;
+            _grade = grade;
+         }
+
+        #endregion
+
+        #region Properties
+
+         public string Name
+         {
+            get
+            {
+                return _name;
+            }
+         }
+
+         public int Grade
+         {
+            get
+            {
+                return _grade;
+            }
+         }
+        #endregion
+
+        #region publicMethods
+
+         public void DisplayStudentInformation()
+         {
+            Console.WriteLine("{0} е от {1} клас", _name, _grade);
+         }
+         
+        #endregion
+
+    }
+}
+
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Grades.Students;
+
+namespace Grades.Marks
+{
+    class Mark
+    {
+        const double LOWESTMARK = 2.50;
+        const double HIGHESTMARK = 6.00;
+        private string _subject = string.Empty;
+        private int _marks = 0;
+
+        public Mark(string subject)
+        {
+            _subject = subject;
+        }
+
+        public string Subject 
+        {
+            get
+            {
+                return _subject;
+            }
+            set
+            {
+                _subject = value;
+            }
+        }
+        public int Marks
+        {
+            get
+            {
+                return _marks;
+            }
+            set
+            {
+                _marks = value;
+            }
+        }
+
+        double sum = 0;
+        public void ShowMark()
+        {
+            int[] arr = new int[3];
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                Console.Write("Оценка: ");
+                _marks = int.Parse(Console.ReadLine());
+                arr[i] = _marks;
+                sum = arr[0] + arr[1] + arr[2];
+                sum = sum / arr.Length;
+            }
+            Console.WriteLine(sum);
+            Console.WriteLine();
+           
+        }
+        public void ContinueToTheNextGrade()
+        {
+            if (sum >= LOWESTMARK)
+            {
+                Console.WriteLine("Преминаваш в другия клас");
+            }
+            else if (sum < LOWESTMARK)
+            {
+                Console.WriteLine("Ще повтаряш класа");
+            }
+            else if (sum == HIGHESTMARK)
+            {
+                Console.WriteLine("Преминаваш в другия клас с пълен отличен");
+            }
+        }
+
+        public void ShowSubject()
+        {
+            Console.WriteLine();
+            Console.WriteLine("Предмет: " + _subject);
+        }
+    }
+}
