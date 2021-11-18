@@ -1,0 +1,385 @@
+public class Creature
+    {
+        #region Fields
+
+         internal int _health;
+         internal int _damage;
+         internal string _weapon;
+         internal string _moving;
+         internal string _attackChoice;
+
+        #endregion
+
+        #region Properties
+
+         public int Health
+         {
+            get
+            {
+                return _health; 
+            }
+            set
+            {
+                _health = value;
+            }
+         }
+         public int Damage
+         {
+            get
+            {
+                return _damage;
+            }
+            set
+            {
+                _damage = value;
+            }
+         }
+         public string Weapon { get; set; }
+         public string Moving { get; set; }
+         public string AttackChoice 
+         {
+            get
+            {
+                return _attackChoice;
+            }
+            set
+            {
+                _attackChoice = AttackChoice;
+            }
+         }
+
+        #endregion
+
+        #region Constructors
+
+         public Creature(int health, int damage, string weapon, string moving)
+         {
+            _health = health;
+            _damage = damage;
+            _weapon = weapon;
+            _moving = moving;
+         }
+         
+         public Creature(string attackChoice)
+         {
+            _attackChoice = attackChoice;
+         }
+        #endregion
+
+        #region PublicMethods
+
+         internal void ShowInformation()
+         {
+            Console.WriteLine("Живот: " + _health);
+            Console.WriteLine("Атака: " + _damage);
+            Console.WriteLine("Оръжие: " + _weapon);
+            Console.WriteLine("Придвижване: " + _moving);
+            Console.WriteLine();
+         }
+
+         internal void WriteInColors(string text, ConsoleColor foregroundColor, ConsoleColor backgroundColor = ConsoleColor.Black)
+         {
+            Console.ForegroundColor = foregroundColor;
+            Console.BackgroundColor = backgroundColor;
+            Console.WriteLine(text);
+            Console.ResetColor();
+         }
+         
+         internal void Attack()
+         {
+            Console.Write("Кого искате да атакувате: ");
+            _attackChoice = Console.ReadLine().ToLower();
+         }
+
+        #endregion
+
+    }
+    
+    ************************************
+    
+    public class Hero : Creature, IFight
+    {
+        Random random = new Random();
+        private int _newHealth;
+        private int _creatureHealth;
+        public Hero(int health, int damage, string weapon, string moving) : base(health, damage, weapon, moving)
+        {
+            _health = health;
+            _damage = damage;
+            _weapon = weapon;
+            _moving = moving;
+        }
+        
+        public Hero(string attackChoice) : base(attackChoice)
+        {
+            _attackChoice = attackChoice;
+        }
+
+        public int heroDamage
+        {
+            get
+            {
+                return heroDamage;
+            }
+            set
+            {
+                heroDamage = value;
+            }
+        }
+        public int heroHealth
+        {
+            get
+            {
+                return heroHealth;
+            }
+            set
+            {
+                heroHealth = value;
+            }
+        }
+
+        public void HeroAttack(int damage, int health, Creature creature)
+        {
+            _newHealth = health - creature.Damage;
+            _creatureHealth = creature.Health - damage;
+            Console.WriteLine(_newHealth);
+        }
+
+        public void UsingMagicItems(Hero hero, Creature creature)
+        {
+            Console.WriteLine("Имате 3 магически предмета");
+            Console.WriteLine("{0}, {1}, {2}", MagicItems.Poison.ToString(), MagicItems.StealHealth.ToString(),
+                MagicItems.Heal.ToString());
+            Console.Write("Въведете число от 1 до 3, за да използвате предмет: ");
+            int number = int.Parse(Console.ReadLine());
+            Console.WriteLine();
+
+            if (number == 1)
+            {
+                int newDamage = hero.Damage + 50;
+                hero.Damage = newDamage;
+            }
+            else if (number == 2)
+            {
+                int newHealth = creature.Health - 20;
+                creature.Health = newHealth;
+            }
+            else if (number == 3)
+            {
+                int newHealth = hero.Health + 100;
+                hero.Health = newHealth;
+            }
+        }
+
+        public void IsCreatureDead(int heroDamage, int creatureHealth, Hero hero)
+        {
+            Creature result;
+            //Creature goblin = new Creature(200, 50, "knife", "walking");
+            OtherCreature troll = new OtherCreature(500, 200, "sword", "walking");
+            string answer;
+
+            if (heroDamage > creatureHealth)
+            {
+                Console.WriteLine("Чудовището е убитo");
+            }
+            else
+            {
+                Console.WriteLine("Чудовището не е убито");
+                Console.WriteLine("Животът му е: " + _creatureHealth);
+                Console.WriteLine();
+                Console.Write("Искате ли да атакувате отново: ");
+                answer = Console.ReadLine().ToLower();
+                Console.WriteLine();
+
+                if (answer == "да")
+                {
+                    Console.Write("Животът на героя след втората атака: ");
+                    hero.HeroAttack(hero.Damage, _newHealth, troll);
+                    int newCreatureHealth = _creatureHealth - hero.Damage;
+
+                    if(newCreatureHealth < 0)
+                    {
+                        newCreatureHealth = 0;
+                    }
+
+                    Console.WriteLine("Животът на чудовището след втората атака: " + newCreatureHealth);
+                    Console.Write("Искате ли да продължите да се биете: ");
+                    answer = Console.ReadLine();
+                    Console.Clear();
+
+                    if (answer == "да")
+                    {
+
+                        do
+                        {
+                            switch(random.Next(1,2))
+                            {
+                                case 1:
+                                result = new Creature(200, 50, "knife", "walking");
+                                result.WriteInColors("Goblin", ConsoleColor.Green);
+                                result.ShowInformation();
+                                hero.HeroAttack(hero.Damage, _newHealth, result);
+                                newCreatureHealth = _creatureHealth - hero.Damage;
+                                hero.Health = _newHealth;
+                                hero.WriteInColors("Hero", ConsoleColor.Cyan);
+                                hero.ShowInformation();
+                                Console.WriteLine("Натиснете бутон, за да продължите");
+                                Console.ReadKey();
+                                Console.Clear();
+                                if (newCreatureHealth < 0)
+                                {
+                                    newCreatureHealth = 0;
+                                }
+                                    break;
+
+                                case 2:
+                                result = new OtherCreature(500, 200, "sword", "walking");
+                                result.WriteInColors("Troll", ConsoleColor.DarkYellow);
+                                result.ShowInformation();
+                                hero.HeroAttack(hero.Damage, _newHealth, result);
+                                newCreatureHealth = _creatureHealth - hero.Damage;
+                                hero.Health = _newHealth;
+                                hero.ShowInformation();
+                                Console.WriteLine("Натиснете бутон, за да продължите");
+                                Console.ReadKey();
+                                Console.Clear();
+
+                                if (newCreatureHealth < 0)
+                                {
+                                    newCreatureHealth = 0;
+                                }
+
+                                    break;
+                            }
+                        }
+                        while (_newHealth > 0);
+                    }
+                }
+                else if(answer == "не")
+                {
+                    Console.WriteLine("ок");
+                }
+            }
+
+        }
+
+    }
+    
+    ************************
+    
+    interface IFight
+    {
+        int heroHealth { get; set; }
+        int heroDamage { get; set; }
+        void HeroAttack(int damage, int health, Creature creature);
+    }
+    
+    ************************
+    
+    public enum MagicItems
+    {
+        Poison = 1,
+        StealHealth = 2,
+        Heal = 3
+    }
+    
+    ******************
+    
+    public class OtherCreature : Creature
+    {
+        internal new string _attackChoice = "troll";
+
+        public OtherCreature(int health, int damage, string weapon, string moving) : 
+            base(health, damage, weapon, moving)
+        {
+            _health = health;
+            _damage = damage;
+            _weapon = weapon;
+            _moving = moving;
+        }
+
+        public new string AttackChoice 
+        {
+            get 
+            {
+                return _attackChoice; 
+            }
+            set
+            {
+                _attackChoice = AttackChoice;
+            }
+
+        }
+        public new int Damage
+        {
+            get
+            {
+                return _damage;
+            }
+            set
+            {
+                _damage = 200;
+                _damage = Damage;
+            }
+
+        }
+        public new int Health
+        {
+            get
+            {
+                return _health;
+            }
+            set
+            {
+                _health = 500;
+                _health = Health;
+            }
+        }
+    }
+    
+    ******************
+    
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Creature goblin = new Creature(200, 50, "knife", "walking");
+            goblin.WriteInColors("Goblin", ConsoleColor.Green);
+            goblin.ShowInformation();
+
+            OtherCreature troll = new OtherCreature(500, 200, "sword", "walking");
+            troll.WriteInColors("Troll", ConsoleColor.DarkYellow);
+            troll.ShowInformation();
+
+            Hero hero = new Hero(1200, 433, "legendary sword", "flying");
+            hero.WriteInColors("Hero", ConsoleColor.Cyan);
+            hero.ShowInformation();
+            hero.Attack();
+            Console.Clear();
+            
+            if(hero._attackChoice == "goblin")
+            {
+                hero.UsingMagicItems(hero, goblin);
+                goblin.WriteInColors("Goblin", ConsoleColor.Green);
+                goblin.ShowInformation();
+                Console.Write("Животът на героя, след атакуване на гоблин: ");
+                hero.HeroAttack(hero.Damage, hero.Health, goblin);
+                hero.IsCreatureDead(hero.Damage, goblin.Health, hero);
+            }
+            else if(hero._attackChoice == "troll")
+            {
+                hero.UsingMagicItems(hero, troll);
+                troll.WriteInColors("Troll", ConsoleColor.DarkYellow);
+                troll.ShowInformation();
+                Console.Write("Животът на героя, след атакуване на трол: ");
+                hero.HeroAttack(hero.Damage, hero.Health, troll);
+                hero.IsCreatureDead(hero.Damage, troll.Health, hero);
+            }
+            else
+            {
+                Console.WriteLine("Няма такова чудовище");
+            }
+
+            //hero.ContinueAttacking(hero);
+        }
+    }
